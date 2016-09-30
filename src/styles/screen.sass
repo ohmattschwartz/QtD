@@ -1,0 +1,522 @@
+@import 'utility'
+
+$base-text-size: 16px
+$base-font-family: sans-serif
+$logo: #0045AA
+$appColor: #37384D
+$appFont: 'Oswald'
+$bluegrey: #91a3bb
+
+html
+  text-size-adjust: 100%
+  height: 100vh
+  width: 100vw
+
+body
+  @include font-smoothing(on)
+  margin: 0
+  font: $base-text-size / 1 $base-font-family
+  position: relative
+
+video.background
+  position: fixed
+  top: 50%
+  left: 50%
+  min-width: 100%
+  min-height: 100%
+  width: auto
+  height: auto
+  z-index: -100
+  transform: translateX(-50%) translateY(-50%)
+  opacity: 0.6
+  filter: grayscale(1)
+
+.app-container
+
+header
+
+  img
+    display: flex
+    height: 25vw
+    width: 75vw
+    max-width: 900px
+    max-height: 230px
+    padding-top: 5vh
+    margin-left: auto
+    margin-right: auto
+
+.login
+  display: flex
+  justify-content: center
+
+  button
+    font-family: $appFont
+    font-size: 2.5vmin
+    padding-left: 3vmin
+    padding-right: 3vmin
+    margin-top: 8vh
+    padding-bottom: 1vmin
+    color: white
+    background-color: $appColor
+    border-radius: 5px
+    border: transparent
+
+.appLogo
+
+  img
+   height: 30%
+   width: 30%
+   max-height: 200px
+   display: flex
+   margin-left: auto
+   margin-right: auto
+   padding-top: 7vmin
+   padding-bottom: 12vmin
+
+.about
+  text-align: center
+  font-family: $appFont
+  font-size: 4vmin
+  margin-left: 2.7%
+  margin-right: 2.7%
+  text-shadow: 0.2vw 0.2vw 0.1vw $bluegrey
+  color: $appColor
+  background: rgba(194,210,237,.5)
+  border-radius: 8px
+
+  p
+   margin-top: 0
+   margin-bottom: 0px
+
+footer
+  font-size: 2vmin
+  font-family: $appFont
+  font-variant: small-caps
+  color: lightgrey
+  background: $appColor
+  margin-bottom: 0vh
+  display: flex
+  justify-content: space-around
+
+  img
+    height: 5vmin
+    margin-top: 1vmin
+
+.designed-by-footer
+  padding-right: 8vmin
+
+.login-screen footer
+  position: fixed
+  bottom: 0
+  left: 0
+  right: 0
+
+
+.home-screen
+
+  header
+    background-color: #c8ccd0
+    margin-top: 0
+    padding-top: 2vmin
+    padding-bottom: 0
+
+    img
+      height: 15vmin
+      width: 65vmin
+      max-width: 900px
+      max-height: 230px
+      padding-top: 0
+      padding-bottom: 1vmin
+
+  footer
+    font-size: 2vmin
+    font-family: $appFont
+    font-variant: small-caps
+    color: lightgrey
+    background: $appColor
+    margin-bottom: 0vh
+    display: flex
+    justify-content: space-around
+
+    img
+      height: 5vmin
+      width: 6vmin
+      padding-top: 0
+      margin-top: 0.9vmax
+
+.nav-menu
+  position: absolute
+  z-index: 1000
+  width: 25vw
+  transform: translateX(0)
+  transition: transform 250ms ease
+
+.nav-mobile
+  display: none
+  width: 32%
+  top: 0
+  padding-left: 5%
+
+  .nav-hidden
+    height: 0
+    transform: translateX(-25vw)
+
+    a
+      height: 0
+      border-width: 0
+      padding: 0
+
+  button
+    top: 15px
+    right: 15px
+    border: 0
+    padding-top: 22vmin
+    // padding-left: 5vmin
+    text-indent: 200%
+    overflow: hidden
+    background: transparent url(http://i.imgur.com/vKRaKDX.png) center no-repeat
+    border: transparent
+    background-size: 10vmin
+    width: 10vmin
+    height: 7vh
+    outline: none
+    transition: all 400ms ease
+    &.expanded
+      transform: rotate(90deg)
+      background-color: transparent
+      border: 0
+  a
+    display: flex
+    background: $appColor
+    border-radius: 2px
+    text-align: left
+    padding: 3%
+    margin-left: 5px
+    padding-left: 8%
+    margin-top: 2.6%
+    text-decoration: none
+    color: white
+    font-family: $appFont
+    height: 1.3em
+    transition: height 250ms ease
+
+.nav-desktop
+  display: block
+  overflow: hidden
+  padding-top: 4vmin
+  a
+    width: 25%
+    float: left
+    border-right: 1px solid #ddd
+    box-sizing: border-box
+    background: $appColor
+    text-align: center
+    font-size: 2vmin
+    padding: 20px 0
+    border-bottom: 1px solid $appColor
+    text-decoration: none
+    color: white
+    font-family: $appFont
+    &:hover, &:active, &:focus
+      background: #41435f
+    &:last-child
+      border-right: none
+
+@media (max-width: 800px)
+  .app-container
+    margin-top: 18vmin
+
+    header
+      display: flex
+      height: 17vmin
+      position: fixed
+      top: 0
+      right: 0
+      left: 0
+
+      img
+        margin-top: -4.2vmin
+        padding-right: 6vmax
+        height: 20vmin
+
+  .options
+    order: -1
+
+  .nav-mobile
+    display: block
+  .nav-desktop
+    display: none
+
+.todaysQuestion
+  background-color: $bluegrey
+  padding-bottom: 0.5vh
+  padding-left: 6.5vw
+  padding-right: 6.5vw
+
+  img
+    display: flex
+    height: 60%
+    width: 30%
+    max-width: 880px
+    max-height: 190px
+    padding-top: 1vmin
+    padding-bottom: 1vh
+    margin-left: auto
+    margin-right: auto
+
+  h1
+    font-size: 3.2vw
+    text-align: center
+    margin-top: 0px
+    border-radius: 5px
+    font-family: $appFont
+    color: $appColor
+    background-color: #f1f2f9
+
+
+.myResponse
+  display: flex
+  justify-content: space-around
+  padding-top: 7vmin
+
+.myResponse-avatar
+
+  img
+    width: 20vw
+    height: 20vmin
+    max-width: 230px
+    max-height: 230px
+    margin-left: 2vw
+    border-radius: 15px
+
+/* qtd answer box */
+.answer-container
+ display: flex
+ justify-content: center
+ margin-right: 2vw
+
+textarea
+ outline: none
+ background: #efefef
+ height: 12.5vmin
+ width: 61vw
+ border: 0
+ padding: 1%
+ resize: none
+ font-family: $appFont
+ font-size: 2vw
+ border-radius: 5px
+
+.nav-answer
+
+  button
+   font-family: $appFont
+   margin: 2% 0% 0% 0%
+   border: 0
+   color: white
+   font-size: 1.4vw
+   background: $appColor
+   padding: 0.6vh 1vw 0.6vh 1vw
+   transition: all .2s ease
+   border-radius: 4px
+
+  button:hover
+   background: #41435f
+
+.user-responses-header
+  display: flex
+  justify-content: space-between
+  padding-top: 0
+  padding-bottom: 0.3vmin
+  background-color: lightgrey
+
+  img
+    height: 8vmin
+    width: 20vmin
+    margin-left: 5%
+    margin-top: 0
+    padding-top: 0
+
+/* SORT ANSWERS */
+.nav
+  margin-top: 3vmin
+  margin-bottom: 0
+  font-size: 2vmin
+  font-family: $appFont
+  text-decoration: none
+
+.nav-tabs > li > a
+  padding: 3vmin 3.98vmin 2.5vmin 3.99vmin
+  color: $logo
+  border-left: 1px solid darkgrey
+  transition: all 0.5s ease
+  &:hover
+    background-color: $appColor !important
+    border: none
+    color: white
+
+.nav-tabs>li>a.active,
+.nav-tabs>li>a.active:focus
+  color: white
+  background-color: $appColor
+  &:hover
+    color: white
+
+.nav-tabs > li,
+.nav-pills > li
+  float: none
+  display: inline-block
+
+.response-lists
+  padding-top: 4vh
+  margin-left: 2.5vw
+  margin-right: 2.5vw
+  padding-left: 9vmin
+  padding-bottom: 4vh
+  border-bottom: 1px solid lightgrey
+
+  img
+    height: 9vmin
+    border-radius: 9px
+
+.my-friend
+  display: flex
+
+.friend-response
+  margin-right: 25vmax
+  margin-left: 4vmax
+
+.friend-response-name
+  font-size: 2.5vmin
+  font-variant: small-caps
+  font-family: $appFont
+  margin-top: 0
+  margin-bottom: 0.8vmin
+
+.friend-response-answer
+  font-size: 2vmin
+  font-family: serif
+  margin: 0
+  margin-right: -30vmin
+
+.about-screen header
+  background-color: #c8ccd0
+  margin-top: 0
+  padding-top: 2vmin
+  padding-bottom: 0
+
+  img
+    height: 15vmin
+    width: 65vmin
+    max-width: 900px
+    max-height: 230px
+    padding-top: 0
+    padding-bottom: 1vmin
+
+  footer
+    font-size: 2vmin
+    font-family: $appFont
+    font-variant: small-caps
+    color: lightgrey
+    background: $appColor
+    margin-bottom: 0vh
+    display: flex
+    justify-content: space-around
+
+    img
+      height: 5vmin
+      width: 6vmin
+      padding-top: 0
+      margin-top: 0.9vmax
+
+.about-screen footer
+  bottom: 0
+  left: 0
+  right: 0
+
+.about-logo
+  display: flex
+  justify-content: center
+  padding-top: 10vmax
+  padding-bottom: 10vmax
+
+  img
+   height: 30vmin
+
+.about-text
+  text-align: center
+  font-family: $appFont
+  color: white
+  font-size: 3vmin
+  margin-left: 4vmin
+  margin-right: 4vmin
+  margin-bottom: 28vmin
+  background-color: $appColor
+  border-radius: 4px
+  padding: 2vmin
+
+.profile-screen
+
+  header
+    background-color: #c8ccd0
+    margin-top: 0
+    padding-top: 2vmin
+    padding-bottom: 0
+
+    img
+      height: 15vmin
+      width: 65vmin
+      max-width: 900px
+      max-height: 230px
+      padding-top: 0
+      padding-bottom: 1vmin
+
+.profile-info
+  background-color: $bluegrey
+  padding-bottom: 8vmin
+
+.profile-avatar
+  display: flex
+  justify-content: center
+  padding-top: 7vmin
+
+  img
+    width: 30vw
+    height: 30vmin
+    max-width: 250px
+    max-height: 250px
+    padding-top: 0
+    margin-left: 2vw
+    border-radius: 15px
+
+
+.profile-bio
+  text-align: center
+  border-radius: 4px
+  font-family: $appFont
+  font-size: 3vmin
+  margin-left: 4vmin
+  margin-right: 4vmin
+  margin-bottom: 4vmin
+  background-color: #d9dee4
+
+  footer
+    font-size: 2vmin
+    font-family: $appFont
+    font-variant: small-caps
+    color: lightgrey
+    background: $appColor
+    margin-bottom: 0vh
+    display: flex
+    justify-content: space-around
+
+    img
+      height: 5vmin
+      width: 6vmin
+      padding-top: 0
+      margin-top: 0.9vmax
+
+.profile-screen footer
+  bottom: 0
+  left: 0
+  right: 0
