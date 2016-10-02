@@ -13,7 +13,8 @@ class App extends Component {
 
     this.state = {
       questions: [],
-      answers: []
+      answers: [],
+      users: []
     }
   }
 
@@ -27,23 +28,33 @@ class App extends Component {
   }
 
   reloadAnswers () {
-    window.fetch(`${Api.url}/answers`, {
-      headers: { 'Authorization': Api.bearer_token, 'Content-Type': 'application/json' }})
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({answers: data})
-      })
+    Api.access('answers', 'GET').then((answers) => {
+      this.setState({answers: answers})
+    })
   }
 
   componentWillMount () {
     this.reloadQuestions()
     this.reloadAnswers()
+    this.reloadUsers()
   }
 
   answersForQuestion = (question) => {
     return this.state.answers.filter((answer) => {
       return answer.question_id === question.id
     })
+  }
+
+  reloadUsers () {
+    Api.access('users', 'GET').then((users) => {
+      this.setState({users: users})
+    })
+  }
+
+  getUser = (userId) => {
+    let defaultUser = { picture: '', name: '' }
+  
+    return this.state.users.find((user) => user.id === userId) || defaultUser
   }
 
   get todaysQuestion () {
@@ -68,7 +79,7 @@ class App extends Component {
         body: JSON.stringify({
           text: text,
           question_id: question.id,
-          user_id: auth.getToken()
+          user_id: auth.getUserId()
         })
       }).then(() => this.reloadAnswers())
     }
@@ -81,7 +92,8 @@ class App extends Component {
           auth: this.props.route.auth,
           todaysQuestion: this.todaysQuestion,
           submitAnswer: this.submitAnswer,
-          answersForQuestion: this.answersForQuestion
+          answersForQuestion: this.answersForQuestion,
+          getUser: this.getUser
         })}
     </div>
   }

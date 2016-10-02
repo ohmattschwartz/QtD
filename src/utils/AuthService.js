@@ -1,6 +1,7 @@
 import Auth0Lock from 'auth0-lock'
 import { browserHistory } from 'react-router'
 import appIcon from '../../images/applogo.svg'
+import Api from '../components/Api'
 
 const AUTH0_CLIENT_ID = 'XpW2Ua3re4XzerFfClZLX0GVzBrDVfLT'
 const AUTH0_DOMAIN = 'questiontheday.auth0.com'
@@ -35,6 +36,9 @@ export default class AuthService {
   _doAuthentication = (authResult) => {
     // Saves the user token
     this.setToken(authResult.idToken)
+
+    // Retrieve the auth0 user information matching this token
+    this.fetchAuth0UserInfo(authResult.idToken)
   }
 
   login = () => {
@@ -45,6 +49,51 @@ export default class AuthService {
   loggedIn () {
     // Checks if there is a saved token and it's still valid
     return !!this.getToken()
+  }
+
+  fetchAuth0UserInfo (idToken) {
+    const auth0EndPoint = `https://${AUTH0_DOMAIN}/tokeninfo`
+
+    window.fetch(auth0EndPoint, { method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id_token: idToken }) }).then((response) => response.json()).then((userInfo) => {
+        this.setUserInfo(userInfo)
+      })
+  }
+
+  getUserId () {
+    return this.beoderp_id
+  }
+
+  getProfileImageURL () {
+    const userInfo = this.getUserInfo()
+
+    return userInfo ? (userInfo.picture_large || userInfo.picture) : ''
+  }
+
+  setUserInfo (userInfo) {
+    // Create / update a user object in beoderp
+
+    // Fetch all the users
+    Api.access('users', 'GET').then((users) => {
+      let matchingUser = users.find((user) => user.user_id === userInfo.user_id)
+      if (matchingUser) {
+        this.beoderp_id = matchingUser.id
+
+        // Update the user
+        Api.access(`users/${matchingUser.id}`, 'PATCH', JSON.stringify(userInfo))
+      } else {
+        Api.access(`users`, 'POST', JSON.stringify(userInfo)).then((data) => {
+          this.beoderp_id = data.id
+        })
+      }
+    })
+
+    window.localStorage.setItem('userInfo', JSON.stringify(userInfo))
+  }
+
+  getUserInfo (userInfo) {
+    return JSON.parse(window.localStorage.getItem('userInfo'))
   }
 
   setToken (idToken) {

@@ -38,7 +38,7 @@ class Home extends Component {
         filtered = answers
     }
 
-    return filtered.reverse().map((answer, i) => <Answer answer={answer} key={i} />)
+    return filtered.reverse().map((answer, i) => <Answer answer={answer} getUser={this.props.getUser} key={i} />)
   }
 
   logout = (event) => {
@@ -59,7 +59,7 @@ class Home extends Component {
       </div>
       <div className='myResponse'>
         <div className='myResponse-avatar'>
-          <img src={require('../../images/avatarFour.jpg')} alt='myAvatar' />
+          <img src={this.props.auth.getProfileImageURL()} alt='myAvatar' />
         </div>
         <div className='answer-container'>
           <div className='answer-comment-box'>
@@ -85,7 +85,9 @@ class Home extends Component {
             <li><Link to='/picks' activeClassName='active'>Staff Picks</Link></li>
           </ul>
         </div>
+
         {this.answers}
+
         <footer>
           <div className='copyright-footer'>
             <p>Copyright &copy; 2016</p>
