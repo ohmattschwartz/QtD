@@ -11,11 +11,13 @@ const BUILD_PATH = path.resolve(ROOT_PATH, 'build')
 
 module.exports = {
   entry: [
+    'whatwg-fetch',
     SOURCE_PATH
   ],
   output: {
-    filename: '/bundle.js',
-    path: BUILD_PATH
+    filename: 'bundle.js',
+    path: BUILD_PATH,
+    publicPath: '/'
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),

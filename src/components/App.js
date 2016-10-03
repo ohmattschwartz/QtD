@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import '../styles/screen.sass'
+import moment from 'moment'
 import Api from './Api'
 
 class App extends Component {
@@ -7,6 +8,10 @@ class App extends Component {
   static propTypes = {
     children: React.PropTypes.element
   }
+
+  nilQuestion = { text: 'Oooops', day_posted: 'Never' }
+  nilUser = { picture: '', name: '' }
+
 
   constructor () {
     super()
@@ -17,6 +22,10 @@ class App extends Component {
       users: [],
       followings: []
     }
+  }
+
+  getUserId () {
+    return this.props.route.auth.getUserId()
   }
 
   reloadQuestions () {
@@ -41,9 +50,22 @@ class App extends Component {
     this.reloadFollowings()
   }
 
+  myAnswers = () => {
+    return this.state.answers.filter((answer) => {
+      return answer.user_id === this.getUserId()
+    })
+  }
+
   answersForQuestion = (question) => {
     return this.state.answers.filter((answer) => {
       return answer.question_id === question.id
+    })
+  }
+
+  answersForUserId = (userId) => {
+    return this.state.answers.filter((answer) => {
+      console.log(`comparing ${answer.user_id} to ${userId} - result ${answer.user_id === userId}`)
+      return answer.user_id === userId
     })
   }
 
@@ -66,36 +88,36 @@ class App extends Component {
   }
 
   getUser = (userId) => {
-    let defaultUser = { picture: '', name: '' }
-
-    return this.state.users.find((user) => user.id === userId) || defaultUser
+    return this.state.users.find((user) => user.id === userId) || this.nilUser
   }
 
   get todaysQuestion () {
-    let question = this.state.questions.find((question) => question.day_posted === '2016-09-28')
+    const today = moment().format("YYYY-MM-DD")
 
-    if (question) {
-      return question
-    } else {
-      // Return something meaningful here
-      return { text: 'Oooops', day_posted: 'Never' }
-    }
+    const question = this.state.questions.find((question) => question.day_posted === today) || this.nilQuestion
+
+    return question
+  }
+
+  questionForId = (questionId) => {
+    const question = this.state.questions.find((question) => question.id === questionId) || this.nilQuestion
+
+    return question
   }
 
   // Return if we are following this user
-  isFollowing (other_user_id) {
-    return this.getFollowing(this.auth.getUserId(), other_user_id)
-  }
+  isFollowing = (other_user_id) => {
+    const my_own_id = this.getUserId()
 
-  // returns something if the given user is following
-  getFollowing = (my_own_id, other_user_id) => {
     return this.state.followings.find((following) => {
       return (following.me === my_own_id && following.them === other_user_id)
     })
   }
 
-  recordFollowing = (my_own_id, other_user_id) => {
-    if (this.getFollowing(my_own_id, other_user_id)) {
+  recordFollowing = (other_user_id) => {
+    const my_own_id = this.getUserId()
+
+    if (this.isFollowing(other_user_id)) {
       // Already have this following!
       return
     }
@@ -112,9 +134,8 @@ class App extends Component {
   }
 
   submitAnswer = (text) => {
-    const { auth } = this.props.route
-    if (auth.loggedIn()) {
-      let question = this.todaysQuestion
+    if (this.props.route.auth.loggedIn()) {
+      const question = this.todaysQuestion
 
       window.fetch(`${Api.url}/answers`, {
         method: 'POST',
@@ -122,7 +143,7 @@ class App extends Component {
         body: JSON.stringify({
           text: text,
           question_id: question.id,
-          user_id: auth.getUserId()
+          user_id: this.getUserId()
         })
       }).then(() => this.reloadAnswers())
     }
@@ -136,11 +157,13 @@ class App extends Component {
           todaysQuestion: this.todaysQuestion,
           submitAnswer: this.submitAnswer,
           answersForQuestion: this.answersForQuestion,
+          answersForUserId: this.answersForUserId,
           getUser: this.getUser,
           recordFollowing: this.recordFollowing,
-          getFollowing: this.getFollowing,
           removeFollowing: this.removeFollowing,
-          isFollowing: this.isFollowing
+          isFollowing: this.isFollowing,
+          myAnswers: this.myAnswers,
+          questionForId: this.questionForId
         })}
     </div>
   }

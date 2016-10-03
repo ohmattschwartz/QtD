@@ -18,26 +18,9 @@ class MyProfile extends Component {
   }
 
   get answers () {
-    let question = this.props.todaysQuestion
-    let answers = this.props.answersForQuestion(question)
-    let filtered
-    switch (this.props.location.pathname) {
-      case '/stars':
-        filtered = []
-        break
-      case '/picks':
-        filtered = answers.filter((answer) => {
-          return answer.staff_pick
-        })
-        break
-      case '/friends':
-        filtered = []
-        break
-      default:
-        filtered = answers
-    }
+    const answers = this.props.myAnswers()
 
-    return filtered.reverse().map((answer, i) => <Answer answer={answer} getUser={this.props.getUser} key={i} />)
+    return answers.reverse().map((answer, i) => <Answer answer={answer} showsQuestion={true} questionForId={this.props.questionForId} getUser={this.props.getUser} key={i} />)
   }
 
   logout = (event) => {
@@ -47,7 +30,7 @@ class MyProfile extends Component {
   }
 
   render () {
-    let user = this.props.getUser(this.props.auth.getUserId())
+    const user = this.props.getUser(this.props.auth.getUserId())
 
     return <div className='profile-screen'>
     <header>
@@ -74,33 +57,30 @@ class MyProfile extends Component {
     </header>
       <div className='profile-info'>
         <div className='profile-avatar'>
-          <img src={user.picture} alt='Profile Photo' />
+          <img src={user.picture_large} alt='Profile Photo' />
         </div>
-        <div className='profile-bio'>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div className='profile-name'>
+          <p>{user.name}</p>
         </div>
       </div>
       <div className='user-responses'>
         <div className='user-responses-header'>
-          <img src={require('../../images/todaysAnswers.png')} />
-          <ul className='nav nav-tabs'>
-            <li><Link to='/'>All</Link></li>
-            <li><Link to='/friends' activeClassName='active'>My Friends</Link></li>
-            <li><Link to='/picks' activeClassName='active'>Staff Picks</Link></li>
-          </ul>
+          <img src={require('../../images/myAnswers.png')} />
         </div>
-        {this.answers}
-      <footer>
-        <div className='copyright-footer'>
-          <p>Copyright &copy; 2016</p>
+        <div className='user-answers'>
+          {this.answers}
         </div>
-        <div className='designed-by-footer'>
-          <p>Designed by Matt Schwartz</p>
-        </div>
-        <div className='TIY-footer'>
-          <img src={require('../../images/tiyLogo.png')} alt='TIY Logo' />
-        </div>
-      </footer>
+        <footer>
+          <div className='copyright-footer'>
+            <p>Copyright &copy; 2016</p>
+          </div>
+          <div className='designed-by-footer'>
+            <p>Designed by Matt Schwartz</p>
+          </div>
+          <div className='TIY-footer'>
+            <img src={require('../../images/tiyLogo.png')} alt='TIY Logo' />
+          </div>
+        </footer>
       </div>
     </div>
   }

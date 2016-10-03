@@ -16,7 +16,7 @@ body
   @include font-smoothing(on)
   margin: 0
   font: $base-text-size / 1 $base-font-family
-  position: relative
+  // position: relative
 
 video.background
   position: fixed
@@ -283,8 +283,8 @@ footer
 .myResponse-avatar
 
   img
-    width: 20vw
     height: 20vmin
+    width: 20vmin
     max-width: 230px
     max-height: 230px
     margin-left: 2vw
@@ -370,22 +370,23 @@ textarea
 
 .response-lists
   padding-top: 4vh
-  margin-left: 2.5vw
-  margin-right: 2.5vw
-  padding-left: 9vmin
+  margin-right: 2vw
+  padding-left: 5vmin
   padding-bottom: 4vh
   border-bottom: 1px solid lightgrey
 
   img
     height: 9vmin
+    width: 9vmin
     border-radius: 9px
 
 .my-friend
   display: flex
 
 .friend-response
-  margin-right: 25vmax
+  margin-right: 4vmin
   margin-left: 4vmax
+  flex: 1
 
 .friend-response-name
   font-size: 2.5vmin
@@ -398,7 +399,7 @@ textarea
   font-size: 2vmin
   font-family: serif
   margin: 0
-  margin-right: -30vmin
+  margin-right: 0
 
 .about-screen header
   background-color: #c8ccd0
@@ -461,7 +462,7 @@ textarea
   header
     background-color: #c8ccd0
     margin-top: 0
-    padding-top: 2vmin
+    padding-top: 2vh
     padding-bottom: 0
 
     img
@@ -471,35 +472,6 @@ textarea
       max-height: 230px
       padding-top: 0
       padding-bottom: 1vmin
-
-.profile-info
-  background-color: $bluegrey
-  padding-bottom: 8vmin
-
-.profile-avatar
-  display: flex
-  justify-content: center
-  padding-top: 7vmin
-
-  img
-    width: 30vw
-    height: 30vmin
-    max-width: 250px
-    max-height: 250px
-    padding-top: 0
-    margin-left: 2vw
-    border-radius: 15px
-
-
-.profile-bio
-  text-align: center
-  border-radius: 4px
-  font-family: $appFont
-  font-size: 3vmin
-  margin-left: 4vmin
-  margin-right: 4vmin
-  margin-bottom: 4vmin
-  background-color: #d9dee4
 
   footer
     font-size: 2vmin
@@ -516,6 +488,58 @@ textarea
       width: 6vmin
       padding-top: 0
       margin-top: 0.9vmax
+
+.profile-info
+  background-color: $bluegrey
+  padding-bottom: 3vmin
+
+.profile-avatar
+  display: flex
+  justify-content: center
+  padding-top: 7vmin
+
+  img
+    width: 25vmin
+    height: 25vmin
+    max-width: 250px
+    max-height: 250px
+    padding-top: 0
+    border-radius: 15px
+
+.profile-name
+  text-align: center
+  border-radius: 4px
+  font-family: $appFont
+  font-size: 2.3vmax
+  margin-left: 30vw
+  margin-right: 30vw
+  background-color: #d9dee4
+
+button
+  display: flex
+  margin-left: auto
+  margin-right: auto
+  font-family: $appFont
+  font-size: 2.5vmin
+  padding-left: 2vmin
+  padding-right: 2vmin
+  color: white
+  background-color: $appColor
+  border-radius: 3px
+  border: transparent
+
+.user-answers
+  color: $appColor
+.friend-response-ago
+  color: $logo
+  font-size: 2vmin
+  margin-top: 0
+  margin-bottom: 1vh
+.friend-response-question
+  font-family: $appFont
+  font-size: 2vmin
+.friend-response-answer
+  font-size: 2.2vmin
 
 .profile-screen footer
   bottom: 0

@@ -47,7 +47,7 @@ class Home extends Component {
     browserHistory.push('/')
   }
 
-  myResponse () {
+  get myResponse () {
     if ( ! this.props.auth.loggedIn()) {
       return <div />
     }
@@ -94,7 +94,7 @@ class Home extends Component {
         <h1>{this.props.todaysQuestion.text}</h1>
       </div>
 
-      {this.myResponse()}
+      {this.myResponse}
 
       <div className='user-responses'>
         <div className='user-responses-header'>

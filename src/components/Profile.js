@@ -13,32 +13,24 @@ class Profile extends Component {
     answersForQuestion: React.PropTypes.func
   }
 
+  get userId () {
+    return parseInt(this.props.params.userId)
+  }
+
   handleSubmit = (event) => {
     event.preventDefault()
     this.props.submitAnswer(this.refs.answer.value)
   }
 
   get answers () {
-    let question = this.props.todaysQuestion
-    let answers = this.props.answersForQuestion(question)
-    let filtered
-    switch (this.props.location.pathname) {
-      case '/stars':
-        filtered = []
-        break
-      case '/picks':
-        filtered = answers.filter((answer) => {
-          return answer.staff_pick
-        })
-        break
-      case '/friends':
-        filtered = []
-        break
-      default:
-        filtered = answers
-    }
+    console.log("User Id")
+    console.log(this.userId)
+    let answers = this.props.answersForUserId(this.userId)
 
-    return filtered.reverse().map((answer, i) => <Answer answer={answer} getUser={this.props.getUser} key={i} />)
+    console.log("answers")
+    console.log(answers)
+
+    return answers.reverse().map((answer, i) => <Answer answer={answer} showsQuestion={true} questionForId={this.props.questionForId} getUser={this.props.getUser} key={i} />)
   }
 
   logout = (event) => {
@@ -48,17 +40,9 @@ class Profile extends Component {
   }
 
   handleFollow = () => {
-    let other_user_id = parseInt(this.props.params.userId)
-    let my_own_id = this.props.auth.getUserId()
+    let other_user_id = parseInt(this.userId)
 
-    this.props.recordFollowing(other_user_id, my_own_id)
-  }
-
-  handleFollow = () => {
-    let other_user_id = parseInt(this.props.params.userId)
-    let my_own_id = this.props.auth.getUserId()
-
-    this.props.recordFollowing(my_own_id, other_user_id)
+    this.props.recordFollowing(other_user_id)
   }
 
   handleUnfollow (following_id) {
@@ -66,10 +50,9 @@ class Profile extends Component {
   }
 
   followButton = () => {
-    let other_user_id = parseInt(this.props.params.userId)
-    let my_own_id = this.props.auth.getUserId()
+    let other_user_id = this.userId
 
-    let following = this.props.getFollowing(my_own_id, other_user_id)
+    let following = this.props.isFollowing(other_user_id)
 
     if (following)
     {
@@ -81,11 +64,11 @@ class Profile extends Component {
   }
 
   render () {
-    let user = this.props.getUser(parseInt(this.props.params.userId))
+    let user = this.props.getUser(parseInt(this.userId))
 
     return <div className='profile-screen'>
     <header>
-      <img src={require('../../images/qtdfullwlogo.png')} alt='QuestionOftheDay' />
+      <img src={require('../../images/qtdfullwlogo.png')} alt='QuestiontheDay' />
       <div className='options'>
         <div className='menu'>
           <nav className='nav-desktop'>
@@ -108,10 +91,10 @@ class Profile extends Component {
     </header>
       <div className='profile-info'>
         <div className='profile-avatar'>
-          <img src={user.picture} alt='Profile Photo' />
+          <img src={user.picture_large} alt='Profile Photo' />
         </div>
-        <div className='profile-bio'>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div className='profile-name'>
+          <p>{user.name}</p>
         </div>
 
         {this.followButton()}
@@ -119,25 +102,20 @@ class Profile extends Component {
       </div>
       <div className='user-responses'>
         <div className='user-responses-header'>
-          <img src={require('../../images/todaysAnswers.png')} />
-          <ul className='nav nav-tabs'>
-            <li><Link to='/'>All</Link></li>
-            <li><Link to='/friends' activeClassName='active'>My Friends</Link></li>
-            <li><Link to='/picks' activeClassName='active'>Staff Picks</Link></li>
-          </ul>
+          <img src={require('../../images/myAnswers.png')} />
         </div>
         {this.answers}
-      <footer>
-        <div className='copyright-footer'>
-          <p>Copyright &copy; 2016</p>
-        </div>
-        <div className='designed-by-footer'>
-          <p>Designed by Matt Schwartz</p>
-        </div>
-        <div className='TIY-footer'>
-          <img src={require('../../images/tiyLogo.png')} alt='TIY Logo' />
-        </div>
-      </footer>
+        <footer>
+          <div className='copyright-footer'>
+            <p>Copyright &copy; 2016</p>
+          </div>
+          <div className='designed-by-footer'>
+            <p>Designed by Matt Schwartz</p>
+          </div>
+          <div className='TIY-footer'>
+            <img src={require('../../images/tiyLogo.png')} alt='TIY Logo' />
+          </div>
+        </footer>
       </div>
     </div>
   }
