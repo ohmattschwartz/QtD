@@ -53,7 +53,7 @@ class About extends Component {
           <div className='menu'>
             <nav className='nav-desktop'>
               <a href='/'>Home</a>
-              <a href='/profile'>My Profile</a>
+              <a href='/my_profile'>My Profile</a>
               <a href='/about'>About Us</a>
               <a href='#' onClick={this.logout}>Log Out</a>
             </nav>
@@ -61,7 +61,7 @@ class About extends Component {
               <button id='nav-toggle'>Toggle</button>
               <div className='nav-menu nav-hidden'>
                 <a href='/'>Home</a>
-                <a href='/profile'>My Profile</a>
+                <a href='/my_profile'>My Profile</a>
                 <a href='/about'>About Us</a>
                 <a href='#' onClick={this.logout}>Log Out</a>
               </div>
@@ -90,7 +90,7 @@ class About extends Component {
         </div>
       </footer>
       <video className='background' playsInline autoPlay muted loop>
-        <source src={require('../../images/handwriting.mp4')} type='video/mp4' />
+        <source src={require('../../images/brettwriting.mp4')} type='video/mp4' />
       </video>
     </div>
   }

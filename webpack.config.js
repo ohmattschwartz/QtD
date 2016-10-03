@@ -14,7 +14,7 @@ module.exports = {
     SOURCE_PATH
   ],
   output: {
-    filename: 'bundle.js',
+    filename: '/bundle.js',
     path: BUILD_PATH
   },
   plugins: [

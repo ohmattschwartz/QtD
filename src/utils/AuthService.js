@@ -62,7 +62,14 @@ export default class AuthService {
   }
 
   getUserId () {
-    return this.beoderp_id
+    let savedID = window.localStorage.getItem('user_id')
+    let integerID = parseInt(savedID)
+
+    return integerID
+  }
+
+  setUserId (userId) {
+    window.localStorage.setItem('user_id', userId)
   }
 
   getProfileImageURL () {
@@ -78,13 +85,13 @@ export default class AuthService {
     Api.access('users', 'GET').then((users) => {
       let matchingUser = users.find((user) => user.user_id === userInfo.user_id)
       if (matchingUser) {
-        this.beoderp_id = matchingUser.id
+        this.setUserId(matchingUser.id)
 
         // Update the user
         Api.access(`users/${matchingUser.id}`, 'PATCH', JSON.stringify(userInfo))
       } else {
         Api.access(`users`, 'POST', JSON.stringify(userInfo)).then((data) => {
-          this.beoderp_id = data.id
+          this.setUserId(data.id)
         })
       }
     })

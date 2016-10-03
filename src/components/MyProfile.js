@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import '../styles/screen.sass'
 import Answer from './Answer'
-import Api from './Api'
 import { browserHistory, Link } from 'react-router'
 
-class Profile extends Component {
+class MyProfile extends Component {
 
   static propTypes = {
     todaysQuestion: React.PropTypes.object,
@@ -47,41 +46,8 @@ class Profile extends Component {
     browserHistory.push('/')
   }
 
-  handleFollow = () => {
-    let other_user_id = parseInt(this.props.params.userId)
-    let my_own_id = this.props.auth.getUserId()
-
-    this.props.recordFollowing(other_user_id, my_own_id)
-  }
-
-  handleFollow = () => {
-    let other_user_id = parseInt(this.props.params.userId)
-    let my_own_id = this.props.auth.getUserId()
-
-    this.props.recordFollowing(my_own_id, other_user_id)
-  }
-
-  handleUnfollow (following_id) {
-    this.props.removeFollowing(following_id)
-  }
-
-  followButton = () => {
-    let other_user_id = parseInt(this.props.params.userId)
-    let my_own_id = this.props.auth.getUserId()
-
-    let following = this.props.getFollowing(my_own_id, other_user_id)
-
-    if (following)
-    {
-      return <button type="submit" onClick={this.handleUnfollow.bind(this, following.id)}>Unfollow</button>
-    }
-    else {
-      return <button type="submit" onClick={this.handleFollow}>Follow</button>
-    }
-  }
-
   render () {
-    let user = this.props.getUser(parseInt(this.props.params.userId))
+    let user = this.props.getUser(this.props.auth.getUserId())
 
     return <div className='profile-screen'>
     <header>
@@ -113,9 +79,6 @@ class Profile extends Component {
         <div className='profile-bio'>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
         </div>
-
-        {this.followButton()}
-
       </div>
       <div className='user-responses'>
         <div className='user-responses-header'>
@@ -142,4 +105,4 @@ class Profile extends Component {
     </div>
   }
 }
-export default Profile
+export default MyProfile

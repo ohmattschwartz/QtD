@@ -8,7 +8,12 @@ let Api = {
     return window.fetch(`${Api.url}/${url}`, {
       method: method,
       headers: headers,
-      body: body}).then((response) => response.json())
+      body: JSON.stringify(body)}).then((response) => {
+        let contentType = response.headers.get('content-type')
+        if (contentType && contentType.indexOf('application/json') !== -1) {
+          return response.json()
+        }
+      })
   }
 }
 

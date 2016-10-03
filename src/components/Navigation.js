@@ -26,7 +26,7 @@ class Navigation extends Component {
       <div className='menu'>
         <nav className='nav-desktop'>
           <Link to='/'>Home</Link>
-          <a href='/profile'>My Profile</a>
+          <a href='/my_profile'>My Profile</a>
           <a href='/about'>About Us</a>
           {this.sessionButton()}
         </nav>
@@ -34,7 +34,7 @@ class Navigation extends Component {
           <button id='nav-toggle'>Toggle</button>
           <div className='nav-menu nav-hidden'>
             <a href='/'>Home</a>
-            <a href='/profile'>My Profile</a>
+            <a href='/my_profile'>My Profile</a>
             <a href='/about'>About Us</a>
             {this.sessionButton()}
           </div>

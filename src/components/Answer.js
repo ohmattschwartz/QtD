@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../styles/screen.sass'
 import moment from 'moment'
+import { Link } from 'react-router'
 
 class Answer extends Component {
 
@@ -24,7 +25,7 @@ class Answer extends Component {
       <div className='my-friend'>
         <img src={user.picture} />
         <div className='friend-response'>
-          <p className='friend-response-name'>{user.name}</p>
+          <p className='friend-response-name'><Link to={`/profile/${user.id}`}>{user.name}</Link></p>
           <p className='friend-response-ago'>{displayedAnswerTime}</p>
           <p className='friend-response-answer'>{this.props.answer.text}</p>
         </div>

@@ -14,7 +14,8 @@ class App extends Component {
     this.state = {
       questions: [],
       answers: [],
-      users: []
+      users: [],
+      followings: []
     }
   }
 
@@ -37,11 +38,24 @@ class App extends Component {
     this.reloadQuestions()
     this.reloadAnswers()
     this.reloadUsers()
+    this.reloadFollowings()
   }
 
   answersForQuestion = (question) => {
     return this.state.answers.filter((answer) => {
       return answer.question_id === question.id
+    })
+  }
+
+  reloadFollowings () {
+    Api.access('followings', 'GET').then((followings) => {
+      // Make sure we are storing the followings as integers
+      followings.forEach((following) => {
+        following.me = parseInt(following.me)
+        following.them = parseInt(following.them)
+      })
+
+      this.setState({followings: followings})
     })
   }
 
@@ -53,7 +67,7 @@ class App extends Component {
 
   getUser = (userId) => {
     let defaultUser = { picture: '', name: '' }
-  
+
     return this.state.users.find((user) => user.id === userId) || defaultUser
   }
 
@@ -66,6 +80,30 @@ class App extends Component {
       // Return something meaningful here
       return { text: 'Oooops', day_posted: 'Never' }
     }
+  }
+
+  // returns something if the given user is following
+  getFollowing = (my_own_id, other_user_id) => {
+    return this.state.followings.find((following) => {
+      return (following.me === my_own_id && following.them === other_user_id)
+    })
+  }
+
+  recordFollowing = (my_own_id, other_user_id) => {
+    if (this.getFollowing(my_own_id, other_user_id)) {
+      // Already have this following!
+      return
+    }
+
+    Api.access('followings', 'POST', { me: my_own_id, them: other_user_id }).then(() => {
+      this.reloadFollowings();
+    })
+  }
+
+  removeFollowing = (following_id) => {
+    Api.access(`followings/${following_id}`, 'DELETE').then(() => {
+      this.reloadFollowings();
+    })
   }
 
   submitAnswer = (text) => {
@@ -93,7 +131,10 @@ class App extends Component {
           todaysQuestion: this.todaysQuestion,
           submitAnswer: this.submitAnswer,
           answersForQuestion: this.answersForQuestion,
-          getUser: this.getUser
+          getUser: this.getUser,
+          recordFollowing: this.recordFollowing,
+          getFollowing: this.getFollowing,
+          removeFollowing: this.removeFollowing
         })}
     </div>
   }
