@@ -82,6 +82,11 @@ class App extends Component {
     }
   }
 
+  // Return if we are following this user
+  isFollowing (other_user_id) {
+    return this.getFollowing(this.auth.getUserId(), other_user_id)
+  }
+
   // returns something if the given user is following
   getFollowing = (my_own_id, other_user_id) => {
     return this.state.followings.find((following) => {
@@ -134,7 +139,8 @@ class App extends Component {
           getUser: this.getUser,
           recordFollowing: this.recordFollowing,
           getFollowing: this.getFollowing,
-          removeFollowing: this.removeFollowing
+          removeFollowing: this.removeFollowing,
+          isFollowing: this.isFollowing
         })}
     </div>
   }

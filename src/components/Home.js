@@ -23,16 +23,16 @@ class Home extends Component {
     let answers = this.props.answersForQuestion(question)
     let filtered
     switch (this.props.location.pathname) {
-      case '/stars':
-        filtered = []
-        break
       case '/picks':
         filtered = answers.filter((answer) => {
           return answer.staff_pick
         })
         break
       case '/friends':
-        filtered = []
+        filtered = answers.filter((answer) => {
+          // If the answer's user_id is someone we are following
+          return this.props.isFollowing(answer.user_id)
+        })
         break
       default:
         filtered = answers
@@ -47,16 +47,12 @@ class Home extends Component {
     browserHistory.push('/')
   }
 
-  render () {
-    return <div className='home-screen'>
-      <header>
-        <img src={require('../../images/qtdfullwlogo.png')} alt='QuestionOftheDay' />
-        <Navigation auth={this.props.auth} />
-      </header>
-      <div className='todaysQuestion'>
-        <img src={require('../../images/todaysQuestion.png')} alt='todaysQuestion' />
-        <h1>{this.props.todaysQuestion.text}</h1>
-      </div>
+  myResponse () {
+    if ( ! this.props.auth.loggedIn()) {
+      return <div />
+    }
+
+    return (
       <div className='myResponse'>
         <div className='myResponse-avatar'>
           <img src={this.props.auth.getProfileImageURL()} alt='myAvatar' />
@@ -76,12 +72,36 @@ class Home extends Component {
           </div>
         </div>
       </div>
+    )
+  }
+
+  myFriends () {
+    if ( ! this.props.auth.loggedIn()) {
+      return ''
+    }
+
+    return <li><Link to='/friends' activeClassName='active'>My Friends</Link></li>
+  }
+
+  render () {
+    return <div className='home-screen'>
+      <header>
+        <img src={require('../../images/qtdfullwlogo.png')} alt='QuestionOftheDay' />
+        <Navigation auth={this.props.auth} />
+      </header>
+      <div className='todaysQuestion'>
+        <img src={require('../../images/todaysQuestion.png')} alt='todaysQuestion' />
+        <h1>{this.props.todaysQuestion.text}</h1>
+      </div>
+
+      {this.myResponse()}
+
       <div className='user-responses'>
         <div className='user-responses-header'>
           <img src={require('../../images/todaysAnswers.png')} />
           <ul className='nav nav-tabs'>
             <li><Link to='/'>All</Link></li>
-            <li><Link to='/friends' activeClassName='active'>My Friends</Link></li>
+            {this.myFriends()}
             <li><Link to='/picks' activeClassName='active'>Staff Picks</Link></li>
           </ul>
         </div>
