@@ -25,17 +25,6 @@ class Login extends Component {
         <p>Using the power of the written word to connect everyday people.</p>
         <p>Every day.</p>
       </div>
-      <footer>
-        <div className='copyright-footer'>
-          <p>Copyright &copy; 2016</p>
-        </div>
-        <div className='designed-by-footer'>
-          <p>Designed by Matt Schwartz</p>
-        </div>
-        <div className='TIY-footer'>
-          <img src={require('../../images/tiyLogo.png')} alt='TIY Logo' />
-        </div>
-      </footer>
       <video className='background' playsInline autoPlay muted loop>
         <source src={require('../../images/brettwriting.mp4')} type='video/mp4' />
       </video>

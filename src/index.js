@@ -38,15 +38,3 @@ const router = <Router history={browserHistory}>
 </Router>
 
 render(router, document.getElementById('root'))
-
-// TODO: Turn this nav into a react component
-let toggle = document.getElementById('nav-toggle')
-if (toggle) {
-  toggle.onclick = (event) => {
-    toggle.classList.toggle('expanded')
-    let siblings = Array.prototype.filter.call(toggle.parentNode.children, (child) => child !== toggle)
-    siblings.forEach((element) => {
-      element.classList.toggle('nav-hidden')
-    })
-  }
-}

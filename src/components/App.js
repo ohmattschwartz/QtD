@@ -6,15 +6,17 @@ import Api from './Api'
 class App extends Component {
 
   static propTypes = {
-    children: React.PropTypes.element
+    children: React.PropTypes.element,
+    route: React.PropTypes.object
   }
 
   nilQuestion = { text: 'Oooops', day_posted: 'Never' }
   nilUser = { picture: '', name: '' }
 
+  constructor (props) {
+    super(props)
 
-  constructor () {
-    super()
+    props.route.auth.onUpdate = () => this.forceUpdate()
 
     this.state = {
       questions: [],
@@ -88,11 +90,12 @@ class App extends Component {
   }
 
   getUser = (userId) => {
+    console.log(userId, this.state.users)
     return this.state.users.find((user) => user.id === userId) || this.nilUser
   }
 
   get todaysQuestion () {
-    const today = moment().format("YYYY-MM-DD")
+    const today = moment().format('YYYY-MM-DD')
 
     const question = this.state.questions.find((question) => question.day_posted === today) || this.nilQuestion
 
@@ -151,20 +154,33 @@ class App extends Component {
 
   render () {
     return <div className='app-container'>
-      {React.cloneElement(this.props.children,
-        {
-          auth: this.props.route.auth,
-          todaysQuestion: this.todaysQuestion,
-          submitAnswer: this.submitAnswer,
-          answersForQuestion: this.answersForQuestion,
-          answersForUserId: this.answersForUserId,
-          getUser: this.getUser,
-          recordFollowing: this.recordFollowing,
-          removeFollowing: this.removeFollowing,
-          isFollowing: this.isFollowing,
-          myAnswers: this.myAnswers,
-          questionForId: this.questionForId
-        })}
+      <main>
+        {React.cloneElement(this.props.children,
+          {
+            auth: this.props.route.auth,
+            todaysQuestion: this.todaysQuestion,
+            submitAnswer: this.submitAnswer,
+            answersForQuestion: this.answersForQuestion,
+            answersForUserId: this.answersForUserId,
+            getUser: this.getUser,
+            recordFollowing: this.recordFollowing,
+            removeFollowing: this.removeFollowing,
+            isFollowing: this.isFollowing,
+            myAnswers: this.myAnswers,
+            questionForId: this.questionForId
+          })}
+      </main>
+      <footer>
+        <div className='copyright-footer'>
+          <p>Copyright &copy; 2016</p>
+        </div>
+        <div className='designed-by-footer'>
+          <p>Designed by Matt Schwartz</p>
+        </div>
+        <div className='TIY-footer'>
+          <img src={require('../../images/tiyLogo.png')} alt='TIY Logo' />
+        </div>
+      </footer>
     </div>
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../styles/screen.sass'
 import Answer from './Answer'
+import Navigation from './Navigation'
 import { browserHistory, Link } from 'react-router'
 
 class MyProfile extends Component {
@@ -35,29 +36,11 @@ class MyProfile extends Component {
     return <div className='profile-screen'>
     <header>
       <img src={require('../../images/qtdfullwlogo.png')} alt='QuestionOftheDay' />
-      <div className='options'>
-        <div className='menu'>
-          <nav className='nav-desktop'>
-            <a href='/'>Home</a>
-            <a href='/my_profile'>My Profile</a>
-            <a href='/about'>About Us</a>
-            <a href='#' onClick={this.logout}>Log Out</a>
-          </nav>
-          <nav className='nav-mobile'>
-            <button id='nav-toggle'>Toggle</button>
-            <div className='nav-menu nav-hidden'>
-              <a href='/'>Home</a>
-              <a href='/my_profile'>My Profile</a>
-              <a href='/about'>About Us</a>
-              <a href='#' onClick={this.logout}>Log Out</a>
-            </div>
-          </nav>
-        </div>
-      </div>
+      <Navigation auth={this.props.auth} />
     </header>
       <div className='profile-info'>
         <div className='profile-avatar'>
-          <img src={user.picture_large} alt='Profile Photo' />
+          <img src={user.picture} alt='Profile Photo' />
         </div>
         <div className='profile-name'>
           <p>{user.name}</p>
@@ -70,17 +53,6 @@ class MyProfile extends Component {
         <div className='user-answers'>
           {this.answers}
         </div>
-        <footer>
-          <div className='copyright-footer'>
-            <p>Copyright &copy; 2016</p>
-          </div>
-          <div className='designed-by-footer'>
-            <p>Designed by Matt Schwartz</p>
-          </div>
-          <div className='TIY-footer'>
-            <img src={require('../../images/tiyLogo.png')} alt='TIY Logo' />
-          </div>
-        </footer>
       </div>
     </div>
   }

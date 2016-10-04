@@ -48,7 +48,7 @@ class Home extends Component {
   }
 
   get myResponse () {
-    if ( ! this.props.auth.loggedIn()) {
+    if (!this.props.auth.loggedIn()) {
       return <div />
     }
 
@@ -76,7 +76,7 @@ class Home extends Component {
   }
 
   myFriends () {
-    if ( ! this.props.auth.loggedIn()) {
+    if (!this.props.auth.loggedIn()) {
       return ''
     }
 
@@ -108,17 +108,6 @@ class Home extends Component {
 
         {this.answers}
 
-        <footer>
-          <div className='copyright-footer'>
-            <p>Copyright &copy; 2016</p>
-          </div>
-          <div className='designed-by-footer'>
-            <p>Designed by Matt Schwartz</p>
-          </div>
-          <div className='TIY-footer'>
-            <img src={require('../../images/tiyLogo.png')} alt='TIY Logo' />
-          </div>
-        </footer>
       </div>
     </div>
   }

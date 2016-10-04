@@ -70,16 +70,26 @@ export default class AuthService {
 
   setUserId (userId) {
     window.localStorage.setItem('user_id', userId)
+    this.onUpdate && this.onUpdate()
   }
 
   getProfileImageURL () {
     const userInfo = this.getUserInfo()
 
-    return userInfo ? (userInfo.picture_large || userInfo.picture) : ''
+    return userInfo ? userInfo.picture : ''
   }
 
   setUserInfo (userInfo) {
     // Create / update a user object in beoderp
+    console.log(userInfo)
+    // Use same property for picture from both APIs
+    if (!userInfo.picture) {
+      userInfo.picture = userInfo.picture_large
+    }
+
+    if (userInfo.picture.match('twimg')) {
+      userInfo.picture = userInfo.picture.replace('normal.jpg', 'bigger.jpg')
+    }
 
     // Fetch all the users
     Api.access('users', 'GET').then((users) => {
@@ -88,15 +98,16 @@ export default class AuthService {
         this.setUserId(matchingUser.id)
 
         // Update the user
-        Api.access(`users/${matchingUser.id}`, 'PATCH', JSON.stringify(userInfo))
+        Api.access(`users/${matchingUser.id}`, 'PATCH', userInfo)
       } else {
-        Api.access(`users`, 'POST', JSON.stringify(userInfo)).then((data) => {
+        Api.access(`users`, 'POST', userInfo).then((data) => {
           this.setUserId(data.id)
         })
       }
     })
 
     window.localStorage.setItem('userInfo', JSON.stringify(userInfo))
+    this.onUpdate && this.onUpdate()
   }
 
   getUserInfo (userInfo) {
@@ -106,6 +117,7 @@ export default class AuthService {
   setToken (idToken) {
     // Saves user token to localStorage
     window.localStorage.setItem('id_token', idToken)
+    this.onUpdate && this.onUpdate()
   }
 
   getToken () {

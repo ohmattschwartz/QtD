@@ -26,7 +26,6 @@ class Answer extends Component {
     if (this.props.showsQuestion)
     {
       let question = this.props.questionForId(this.props.answer.question_id)
-
       return <p className='friend-response-question'>{question.text}</p>
     } else {
       return ''
@@ -40,7 +39,7 @@ class Answer extends Component {
 
     return <div className='response-lists'>
       <div className='my-friend'>
-        <img src={user.picture_large} />
+        <img src={user.picture} />
         <div className='friend-response'>
           <p className='friend-response-name'><Link to={`/profile/${user.id}`}>{user.name}</Link></p>
           <p className='friend-response-ago'>{displayedAnswerTime}</p>

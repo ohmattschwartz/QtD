@@ -9,14 +9,23 @@ $bluegrey: #91a3bb
 
 html
   text-size-adjust: 100%
-  height: 100vh
+  height: 100%
   width: 100vw
 
 body
   @include font-smoothing(on)
   margin: 0
   font: $base-text-size / 1 $base-font-family
-  // position: relative
+
+body, #root, .app-container
+  min-height: 100vh
+
+.app-container
+  display: flex
+  flex-direction: column
+
+  > main
+    flex: 1
 
 video.background
   position: fixed
@@ -37,11 +46,9 @@ header
 
   img
     display: flex
-    height: 25vw
-    width: 75vw
-    max-width: 900px
-    max-height: 230px
-    padding-top: 5vh
+    height: 27vmin
+    width: 77vmin
+    padding-top: 2.5vh
     margin-left: auto
     margin-right: auto
 
@@ -54,18 +61,18 @@ header
     font-size: 2.5vmin
     padding-left: 3vmin
     padding-right: 3vmin
-    margin-top: 8vh
-    padding-bottom: 1vmin
+    margin-top: 7vh
+    padding-bottom: 0.8vmin
     color: white
     background-color: $appColor
-    border-radius: 5px
+    border-radius: 3px
     border: transparent
 
 .appLogo
 
   img
-   height: 30%
-   width: 30%
+   height: 20vmin
+   width: 20vmin
    max-height: 200px
    display: flex
    margin-left: auto
@@ -76,9 +83,10 @@ header
 .about
   text-align: center
   font-family: $appFont
-  font-size: 4vmin
-  margin-left: 2.7%
-  margin-right: 2.7%
+  font-size: 3.5vmin
+  margin-left: 15vmin
+  margin-right: 15vmin
+  padding-bottom: 0.3vmin
   text-shadow: 0.2vw 0.2vw 0.1vw $bluegrey
   color: $appColor
   background: rgba(194,210,237,.3)
@@ -111,6 +119,87 @@ footer
   left: 0
   right: 0
 
+@media (max-width: 768px)
+  .app-container
+
+  header
+
+    img
+      display: flex
+      height: 25vmin
+      width: 75vmin
+      padding-top: 7vh
+      margin-left: auto
+      margin-right: auto
+
+  .login
+    display: flex
+    justify-content: center
+
+    button
+      font-family: $appFont
+      font-size: 2.5vmin
+      padding-left: 3vmin
+      padding-right: 3vmin
+      margin-top: 16vh
+      padding-bottom: 1vmin
+      color: white
+      background-color: $appColor
+      border-radius: 5px
+      border: transparent
+
+  .appLogo
+
+    img
+     height: 30%
+     width: 30%
+     max-height: 200px
+     display: flex
+     margin-left: auto
+     margin-right: auto
+     padding-top: 17vmin
+     padding-bottom: 17vmin
+
+  .about
+    text-align: center
+    font-family: $appFont
+    font-size: 4vmin
+    margin-left: 2.7%
+    margin-right: 2.7%
+    text-shadow: 0.2vw 0.2vw 0.1vw $bluegrey
+    color: $appColor
+    background: rgba(194,210,237,.3)
+    border-radius: 4px
+
+    p
+     margin-top: 0
+     margin-bottom: 0px
+
+  // footer
+  //   font-size: 2vmin
+  //   font-family: $appFont
+  //   font-variant: small-caps
+  //   color: lightgrey
+  //   background: $appColor
+  //   margin-bottom: 0vh
+  //   display: flex
+  //   justify-content: space-around
+  //
+  //   img
+  //     height: 5vmin
+  //     margin-top: 1vmin
+
+.auth0-lock-header
+  font-family: $appFont
+
+  // .designed-by-footer
+  //   padding-right: 8vmin
+  //
+  // .login-screen footer
+  //   position: fixed
+  //   bottom: 0
+  //   left: 0
+  //   right: 0
 
 .home-screen
 
@@ -137,6 +226,7 @@ footer
     margin-bottom: 0vh
     display: flex
     justify-content: space-around
+
 
     img
       height: 5vmin
@@ -223,6 +313,9 @@ footer
       border-right: none
 
 @media (max-width: 800px)
+  body, #root, .app-container
+    min-height: calc(100vh - 18vmin)
+
   .app-container
     margin-top: 18vmin
 
@@ -283,8 +376,8 @@ footer
 .myResponse-avatar
 
   img
-    height: 20vmin
-    width: 20vmin
+    height: 22vmin
+    width: 22vmin
     max-width: 230px
     max-height: 230px
     margin-left: 2vw

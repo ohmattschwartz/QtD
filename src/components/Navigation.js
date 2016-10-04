@@ -1,10 +1,18 @@
 import React, { Component, PropTypes as T } from 'react'
 import { Link, browserHistory } from 'react-router'
+import cx from 'classnames'
 
 class Navigation extends Component {
 
   static propTypes = {
     auth: T.object
+  }
+
+  constructor () {
+    super()
+    this.state = {
+      expanded: false
+    }
   }
 
   logout = (event) => {
@@ -21,6 +29,16 @@ class Navigation extends Component {
     }
   }
 
+  handleClick = () => {
+    console.log('click!')
+    this.setState({
+      expanded: !this.state.expanded
+    })
+  }
+
+  // toggle.classList.toggle('expanded')
+  // element.classList.toggle('nav-hidden')
+
   render () {
     return <div className='options'>
       <div className='menu'>
@@ -31,8 +49,8 @@ class Navigation extends Component {
           {this.sessionButton()}
         </nav>
         <nav className='nav-mobile'>
-          <button id='nav-toggle'>Toggle</button>
-          <div className='nav-menu nav-hidden'>
+          <button id='nav-toggle' className={cx({expanded: this.state.expanded})} onClick={this.handleClick}>Toggle</button>
+          <div className={cx('nav-menu', {'nav-hidden': !this.state.expanded})}>
             <a href='/'>Home</a>
             <a href='/my_profile'>My Profile</a>
             <a href='/about'>About Us</a>

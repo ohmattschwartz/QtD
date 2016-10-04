@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../styles/screen.sass'
 import Answer from './Answer'
+import Navigation from './Navigation'
 import Api from './Api'
 import { browserHistory, Link } from 'react-router'
 
@@ -50,7 +51,12 @@ class Profile extends Component {
   }
 
   followButton = () => {
-    let other_user_id = this.userId
+    let other_user_id = parseInt(this.userId)
+
+    // We are looking at ourselves
+    if (this.props.auth.getUserId() === other_user_id) {
+      return ''
+    }
 
     let following = this.props.isFollowing(other_user_id)
 
@@ -69,29 +75,11 @@ class Profile extends Component {
     return <div className='profile-screen'>
     <header>
       <img src={require('../../images/qtdfullwlogo.png')} alt='QuestiontheDay' />
-      <div className='options'>
-        <div className='menu'>
-          <nav className='nav-desktop'>
-            <a href='/'>Home</a>
-            <a href='/my_profile'>My Profile</a>
-            <a href='/about'>About Us</a>
-            <a href='#' onClick={this.logout}>Log Out</a>
-          </nav>
-          <nav className='nav-mobile'>
-            <button id='nav-toggle'>Toggle</button>
-            <div className='nav-menu nav-hidden'>
-              <a href='/'>Home</a>
-              <a href='/my_profile'>My Profile</a>
-              <a href='/about'>About Us</a>
-              <a href='#' onClick={this.logout}>Log Out</a>
-            </div>
-          </nav>
-        </div>
-      </div>
+      <Navigation auth={this.props.auth} />
     </header>
       <div className='profile-info'>
         <div className='profile-avatar'>
-          <img src={user.picture_large} alt='Profile Photo' />
+          <img src={user.picture} alt='Profile Photo' />
         </div>
         <div className='profile-name'>
           <p>{user.name}</p>
@@ -105,17 +93,6 @@ class Profile extends Component {
           <img src={require('../../images/myAnswers.png')} />
         </div>
         {this.answers}
-        <footer>
-          <div className='copyright-footer'>
-            <p>Copyright &copy; 2016</p>
-          </div>
-          <div className='designed-by-footer'>
-            <p>Designed by Matt Schwartz</p>
-          </div>
-          <div className='TIY-footer'>
-            <img src={require('../../images/tiyLogo.png')} alt='TIY Logo' />
-          </div>
-        </footer>
       </div>
     </div>
   }
