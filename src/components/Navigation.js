@@ -44,16 +44,16 @@ class Navigation extends Component {
       <div className='menu'>
         <nav className='nav-desktop'>
           <Link to='/'>Home</Link>
-          <a href='/my_profile'>My Profile</a>
-          <a href='/about'>About Us</a>
+          <Link to='/my_profile'>My Profile</Link>
+          <Link to='/about'>About Us</Link>
           {this.sessionButton()}
         </nav>
         <nav className='nav-mobile'>
           <button id='nav-toggle' className={cx({expanded: this.state.expanded})} onClick={this.handleClick}>Toggle</button>
           <div className={cx('nav-menu', {'nav-hidden': !this.state.expanded})}>
-            <a href='/'>Home</a>
-            <a href='/my_profile'>My Profile</a>
-            <a href='/about'>About Us</a>
+            <Link to='/'>Home</Link>
+            <Link to='/my_profile'>My Profile</Link>
+            <Link to='/about'>About Us</Link>
             {this.sessionButton()}
           </div>
         </nav>
