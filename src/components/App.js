@@ -11,7 +11,7 @@ class App extends Component {
   }
 
   nilQuestion = { text: 'Oooops', day_posted: 'Never' }
-  nilUser = { picture: '', name: '' }
+  nilUser = { picture_large: '', name: '' }
 
   constructor (props) {
     super(props)
@@ -50,6 +50,13 @@ class App extends Component {
     this.reloadAnswers()
     this.reloadUsers()
     this.reloadFollowings()
+  }
+
+  answerForTodaysQuestion (userId) {
+    const todaysQuestionId = this.todaysQuestion.id
+    const answers = this.answersForUserId(userId)
+
+    return answers.find((answer) => answer.question_id === todaysQuestionId)
   }
 
   myAnswers = () => {
@@ -136,6 +143,20 @@ class App extends Component {
     })
   }
 
+  reviseAnswer = (text, answerId) => {
+    const question = this.todaysQuestion
+
+    window.fetch(`${Api.url}/answers/${answerId}`, {
+      method: 'PATCH',
+      headers: { 'Authorization': Api.bearer_token, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        text: text,
+        question_id: question.id,
+        user_id: this.getUserId()
+      })
+    }).then(() => this.reloadAnswers())
+  }
+
   submitAnswer = (text) => {
     if (this.props.route.auth.loggedIn()) {
       const question = this.todaysQuestion
@@ -160,6 +181,7 @@ class App extends Component {
             auth: this.props.route.auth,
             todaysQuestion: this.todaysQuestion,
             submitAnswer: this.submitAnswer,
+            reviseAnswer: this.reviseAnswer,
             answersForQuestion: this.answersForQuestion,
             answersForUserId: this.answersForUserId,
             getUser: this.getUser,
@@ -167,7 +189,8 @@ class App extends Component {
             removeFollowing: this.removeFollowing,
             isFollowing: this.isFollowing,
             myAnswers: this.myAnswers,
-            questionForId: this.questionForId
+            questionForId: this.questionForId,
+            answerForTodaysQuestion: this.answerForTodaysQuestion
           })}
       </main>
       <footer>

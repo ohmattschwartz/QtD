@@ -76,19 +76,19 @@ export default class AuthService {
   getProfileImageURL () {
     const userInfo = this.getUserInfo()
 
-    return userInfo ? userInfo.picture : ''
+    return userInfo ? userInfo.picture_large : ''
   }
 
   setUserInfo (userInfo) {
     // Create / update a user object in beoderp
     console.log(userInfo)
     // Use same property for picture from both APIs
-    if (!userInfo.picture) {
-      userInfo.picture = userInfo.picture_large
+    if (!userInfo.picture_large) {
+      userInfo.picture_large = userInfo.picture
     }
 
-    if (userInfo.picture.match('twimg')) {
-      userInfo.picture = userInfo.picture.replace('normal.jpg', 'bigger.jpg')
+    if (userInfo.picture_large.match('twimg')) {
+      userInfo.picture_large = userInfo.picture_large.replace('normal.jpg', 'bigger.jpg')
     }
 
     // Fetch all the users

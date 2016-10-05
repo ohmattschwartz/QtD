@@ -79,7 +79,7 @@ class Profile extends Component {
     </header>
       <div className='profile-info'>
         <div className='profile-avatar'>
-          <img src={user.picture} alt='Profile Photo' />
+          <img src={user.picture_large} alt='Profile Photo' />
         </div>
         <div className='profile-name'>
           <p>{user.name}</p>

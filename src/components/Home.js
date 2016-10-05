@@ -10,12 +10,37 @@ class Home extends Component {
     todaysQuestion: React.PropTypes.object,
     location: React.PropTypes.object,
     submitAnswer: React.PropTypes.func,
+    reviseAnswer: React.PropTypes.func,
     answersForQuestion: React.PropTypes.func
+  }
+
+  constructor (props) {
+    super(props)
+
+    this.state = { answer: '' }
+  }
+
+  componentWillReceiveProps (props) {
+    const answer = this.answerForTodaysQuestion ? this.answerForTodaysQuestion.text : ''
+
+    this.state = { answer: answer }
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
-    this.props.submitAnswer(this.refs.answer.value)
+
+    if (this.answerForTodaysQuestion) {
+      this.props.reviseAnswer(this.refs.answer.value, this.answerForTodaysQuestion.id)
+
+      // Force a page update
+      document.location.reload()
+    } else {
+      this.props.submitAnswer(this.refs.answer.value)
+    }
+  }
+
+  handleUpdateAnswer = (event) => {
+    this.setState({answer: event.target.value})
   }
 
   get answers () {
@@ -47,10 +72,16 @@ class Home extends Component {
     browserHistory.push('/')
   }
 
+  get answerForTodaysQuestion () {
+    return this.props.answerForTodaysQuestion(this.props.auth.getUserId())
+  }
+
   get myResponse () {
     if (!this.props.auth.loggedIn()) {
       return <div />
     }
+
+    const prompt = this.answerForTodaysQuestion ? 'REVISE' : 'RESPOND'
 
     return (
       <div className='myResponse'>
@@ -62,10 +93,10 @@ class Home extends Component {
             <div className='answer-comment-form'>
               <form>
                 <div>
-                  <textarea id='comment' placeholder='Type your Response Here...' ref='answer' />
+                  <textarea id='comment' placeholder='Type your Response Here...' ref='answer' onChange={this.handleUpdateAnswer} value={this.state.answer} />
                 </div>
                 <nav className='nav-answer'>
-                  <button type='submit' onClick={this.handleSubmit}>RESPOND</button>
+                  <button type='submit' onClick={this.handleSubmit}>{prompt}</button>
                 </nav>
               </form>
             </div>
