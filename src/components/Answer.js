@@ -4,6 +4,14 @@ import moment from 'moment'
 import { Link } from 'react-router'
 
 class Answer extends Component {
+  beforeTheFoldTextLength = 140
+
+  constructor (props) {
+    super(props)
+
+    this.state = { expanded: false }
+  }
+
   isFromToday () {
     return this.createdAt.getDay() === new Date().getDay() &&
         this.createdAt.getMonth() === new Date().getMonth() &&
@@ -32,6 +40,18 @@ class Answer extends Component {
     }
   }
 
+  expandAnswer = () => {
+    this.setState({expanded: true})
+  }
+
+  get answerText () {
+    if (this.props.answer.text.length <= this.beforeTheFoldTextLength || this.state.expanded === true) {
+      return this.props.answer.text
+    }
+
+    return <span>{this.props.answer.text.substring(0, this.beforeTheFoldTextLength)}...<span className='show-more' onClick={this.expandAnswer}>(more)</span></span>
+  }
+
   render () {
     let user = this.props.getUser(this.props.answer.user_id)
 
@@ -44,7 +64,7 @@ class Answer extends Component {
           <p className='friend-response-name'><Link to={`/profile/${user.id}`}>{user.name}</Link></p>
           <p className='friend-response-ago'>{displayedAnswerTime}</p>
           {this.displayQuestion}
-          <p className='friend-response-answer'>{this.props.answer.text}</p>
+          <p className='friend-response-answer'>{this.answerText}</p>
         </div>
       </div>
     </div>

@@ -32,7 +32,10 @@ const router = <Router history={browserHistory}>
     </Route>
     <Route path='/login' component={Login} onEnter={postLogin} />
     <Route path='/about' component={About} />
-    <Route path='/my_profile' component={MyProfile} onEnter={requireAuth} />
+    <Route path='/my_profile' component={MyProfile} onEnter={requireAuth}>
+      <Route path='/my-answers' />
+      <Route path='/my-followers' />
+    </Route>
     <Route path='/profile/:userId' component={Profile} onEnter={requireAuth} />
   </Route>
 </Router>

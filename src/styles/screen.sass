@@ -65,7 +65,7 @@ header
     padding-bottom: 0.8vmin
     color: white
     background-color: $appColor
-    border-radius: 3px
+    border-radius: 2px
     border: transparent
 
 .appLogo
@@ -105,6 +105,13 @@ footer
   margin-bottom: 0vh
   display: flex
   justify-content: space-around
+
+  a
+   color: white
+   text-decoration: none
+
+  a:visited
+    color: white
 
   img
     height: 5vmin
@@ -175,31 +182,12 @@ footer
      margin-top: 0
      margin-bottom: 0px
 
-  // footer
-  //   font-size: 2vmin
-  //   font-family: $appFont
-  //   font-variant: small-caps
-  //   color: lightgrey
-  //   background: $appColor
-  //   margin-bottom: 0vh
-  //   display: flex
-  //   justify-content: space-around
-  //
-  //   img
-  //     height: 5vmin
-  //     margin-top: 1vmin
-
 .auth0-lock-header
   font-family: $appFont
+  color: $appColor
 
-  // .designed-by-footer
-  //   padding-right: 8vmin
-  //
-  // .login-screen footer
-  //   position: fixed
-  //   bottom: 0
-  //   left: 0
-  //   right: 0
+.auth0-lock-name
+  color: $logo
 
 .home-screen
 
@@ -212,8 +200,6 @@ footer
     img
       height: 15vmin
       width: 65vmin
-      max-width: 900px
-      max-height: 230px
       padding-top: 0
       padding-bottom: 1vmin
 
@@ -312,7 +298,7 @@ footer
     &:last-child
       border-right: none
 
-@media (max-width: 800px)
+@media (max-width: 768px)
   body, #root, .app-container
     min-height: calc(100vh - 18vmin)
 
@@ -361,7 +347,7 @@ footer
     font-size: 3.2vw
     text-align: center
     margin-top: 0px
-    border-radius: 5px
+    border-radius: 3px
     font-family: $appFont
     color: $appColor
     background-color: #f1f2f9
@@ -376,10 +362,8 @@ footer
 .myResponse-avatar
 
   img
-    height: 22vmin
-    width: 22vmin
-    max-width: 230px
-    max-height: 230px
+    height: 25vmin
+    width: 25vmin
     margin-left: 2vw
     border-radius: 15px
 
@@ -387,18 +371,18 @@ footer
 .answer-container
  display: flex
  justify-content: center
- margin-right: 2vw
+ margin-right: 2vmin
 
 textarea
  outline: none
  background: #efefef
- height: 12.5vmin
+ height: 18vmin
  width: 61vw
  border: 0
  padding: 1%
  resize: none
  font-family: $appFont
- font-size: 2vw
+ font-size: 3.2vmin
  border-radius: 5px
 
 .nav-answer
@@ -412,7 +396,7 @@ textarea
    background: $appColor
    padding: 0.6vh 1vw 0.6vh 1vw
    transition: all .2s ease
-   border-radius: 4px
+   border-radius: 3px
 
   button:hover
    background: #41435f
@@ -464,8 +448,9 @@ textarea
 .response-lists
   padding-top: 4vh
   margin-right: 2vw
-  padding-left: 5vmin
-  padding-bottom: 4vh
+  margin-left: 2vw
+  padding-left: 3vmin
+  padding-bottom: 3vh
   border-bottom: 1px solid lightgrey
 
   img
@@ -491,8 +476,10 @@ textarea
 .friend-response-answer
   font-size: 2vmin
   font-family: serif
+  color: $appColor
   margin: 0
   margin-right: 0
+  padding-bottom: 1vmin
 
 .about-screen header
   background-color: #c8ccd0
@@ -532,8 +519,8 @@ textarea
 .about-logo
   display: flex
   justify-content: center
-  padding-top: 10vmax
-  padding-bottom: 10vmax
+  padding-top: 10vmin
+  padding-bottom: 10vmin
 
   img
    height: 30vmin
@@ -545,7 +532,7 @@ textarea
   font-size: 3vmin
   margin-left: 4vmin
   margin-right: 4vmin
-  margin-bottom: 28vmin
+  margin-bottom: 20vmin
   background: rgba(55,56,77,.7)
   border-radius: 4px
   padding: 2vmin
@@ -625,16 +612,22 @@ button
   color: $appColor
 .friend-response-ago
   color: $logo
-  font-size: 2vmin
+  font-size: 1.8vmin
   margin-top: 0
-  margin-bottom: 1vh
+  margin-bottom: 0vh
 .friend-response-question
   font-family: $appFont
-  font-size: 2vmin
+  font-size: 2.5vmin
+  margin-top: 1vmin
+  margin-bottom: 1.2vmin
 .friend-response-answer
-  font-size: 2.2vmin
+  font-size: 3vmin
 
 .profile-screen footer
   bottom: 0
   left: 0
   right: 0
+
+.show-more
+  cursor: pointer
+  color: $logo

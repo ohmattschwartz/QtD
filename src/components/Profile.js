@@ -24,12 +24,7 @@ class Profile extends Component {
   }
 
   get answers () {
-    console.log("User Id")
-    console.log(this.userId)
     let answers = this.props.answersForUserId(this.userId)
-
-    console.log("answers")
-    console.log(answers)
 
     return answers.reverse().map((answer, i) => <Answer answer={answer} showsQuestion={true} questionForId={this.props.questionForId} getUser={this.props.getUser} key={i} />)
   }

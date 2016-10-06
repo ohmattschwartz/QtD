@@ -30,7 +30,6 @@ class Navigation extends Component {
   }
 
   handleClick = () => {
-    console.log('click!')
     this.setState({
       expanded: !this.state.expanded
     })

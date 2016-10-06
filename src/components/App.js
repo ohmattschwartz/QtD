@@ -73,7 +73,6 @@ class App extends Component {
 
   answersForUserId = (userId) => {
     return this.state.answers.filter((answer) => {
-      console.log(`comparing ${answer.user_id} to ${userId} - result ${answer.user_id === userId}`)
       return answer.user_id === userId
     })
   }
@@ -97,7 +96,6 @@ class App extends Component {
   }
 
   getUser = (userId) => {
-    console.log(userId, this.state.users)
     return this.state.users.find((user) => user.id === userId) || this.nilUser
   }
 
@@ -113,6 +111,14 @@ class App extends Component {
     const question = this.state.questions.find((question) => question.id === questionId) || this.nilQuestion
 
     return question
+  }
+
+  myFollowings = () => {
+    const my_own_id = this.getUserId()
+
+    return this.state.followings.filter((following) => {
+      return (following.me === my_own_id)
+    })
   }
 
   // Return if we are following this user
@@ -187,6 +193,7 @@ class App extends Component {
             getUser: this.getUser,
             recordFollowing: this.recordFollowing,
             removeFollowing: this.removeFollowing,
+            myFollowings: this.myFollowings,
             isFollowing: this.isFollowing,
             myAnswers: this.myAnswers,
             questionForId: this.questionForId,
@@ -198,7 +205,7 @@ class App extends Component {
           <p>Copyright &copy; 2016</p>
         </div>
         <div className='designed-by-footer'>
-          <p>Designed by Matt Schwartz</p>
+          <p><a href='https://github.com/ohmattschwartz'>Designed by Matt Schwartz</a></p>
         </div>
         <div className='TIY-footer'>
           <img src={require('../../images/tiyLogo.png')} alt='TIY Logo' />

@@ -30,6 +30,41 @@ class MyProfile extends Component {
     browserHistory.push('/')
   }
 
+  get ansers () {
+    <div className='user-answers'>
+      {this.answers}
+    </div>
+  }
+
+  userDisplay (following) {
+    const user = this.props.getUser(following.them)
+
+    return  <div className='response-lists'>
+              <div key={user.id} className='my-friend'>
+                <img src={user.picture} />
+                <div className='friend-response'>
+                  <p className='friend-response-name'><Link to={`/profile/${user.id}`}>{user.name}</Link></p>
+                </div>
+              </div>
+            </div>
+  }
+
+  get followers () {
+    console.log(this.props.myFollowings())
+    return this.props.myFollowings().map((following) => this.userDisplay(following))
+  }
+
+  get page () {
+    switch (this.props.location.pathname) {
+      case '/my-answers':
+        return this.answers
+      case '/my-followers':
+        return <div>{this.followers}</div>
+      default:
+        return this.answers
+    }
+  }
+
   render () {
     const user = this.props.getUser(this.props.auth.getUserId())
 
@@ -49,10 +84,12 @@ class MyProfile extends Component {
       <div className='user-responses'>
         <div className='user-responses-header'>
           <img src={require('../../images/myAnswers.png')} />
+          <ul className='nav nav-tabs'>
+            <li><Link to='/my-answers'>My Answers</Link></li>
+            <li><Link to='/my-followers' activeClassName='active'>My Followers</Link></li>
+          </ul>
         </div>
-        <div className='user-answers'>
-          {this.answers}
-        </div>
+        {this.page}
       </div>
     </div>
   }
