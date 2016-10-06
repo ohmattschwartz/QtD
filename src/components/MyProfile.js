@@ -50,7 +50,6 @@ class MyProfile extends Component {
   }
 
   get followers () {
-    console.log(this.props.myFollowings())
     return this.props.myFollowings().map((following) => this.userDisplay(following))
   }
 

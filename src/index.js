@@ -36,7 +36,10 @@ const router = <Router history={browserHistory}>
       <Route path='/my-answers' />
       <Route path='/my-followers' />
     </Route>
-    <Route path='/profile/:userId' component={Profile} onEnter={requireAuth} />
+    <Route path='/profile/:userId' component={Profile} onEnter={requireAuth}>
+      <Route path='/profile/:userId/their-answers' />
+      <Route path='/profile/:userId/their-followers' />
+    </Route>
   </Route>
 </Router>
 

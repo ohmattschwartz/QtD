@@ -29,6 +29,23 @@ class Profile extends Component {
     return answers.reverse().map((answer, i) => <Answer answer={answer} showsQuestion={true} questionForId={this.props.questionForId} getUser={this.props.getUser} key={i} />)
   }
 
+  userDisplay (following) {
+    const user = this.props.getUser(following.them)
+
+    return  <div className='response-lists'>
+              <div key={user.id} className='my-friend'>
+                <img src={user.picture} />
+                <div className='friend-response'>
+                  <p className='friend-response-name'><Link to={`/profile/${user.id}`}>{user.name}</Link></p>
+                </div>
+              </div>
+            </div>
+  }
+
+  get followers () {
+    return this.props.followingsForUserId(this.userId).map((following) => this.userDisplay(following))
+  }
+
   logout = (event) => {
     event.preventDefault()
     this.props.auth.logout()
@@ -64,6 +81,19 @@ class Profile extends Component {
     }
   }
 
+  get page () {
+    console.log("PAGE!")
+    console.log(this.props.location.pathname)
+    switch (this.props.location.pathname) {
+      case `/profile/${this.userId}/their-answers`:
+        return this.answers
+      case `/profile/${this.userId}/their-followers`:
+        return <div>{this.followers}</div>
+      default:
+        return this.answers
+    }
+  }
+
   render () {
     let user = this.props.getUser(parseInt(this.userId))
 
@@ -86,8 +116,12 @@ class Profile extends Component {
       <div className='user-responses'>
         <div className='user-responses-header'>
           <img src={require('../../images/myAnswers.png')} />
+          <ul className='nav nav-tabs'>
+            <li><Link to={`/profile/${this.userId}/their-answers`}>My Answers</Link></li>
+            <li><Link to={`/profile/${this.userId}/their-followers`} activeClassName='active'>My Followers</Link></li>
+          </ul>
         </div>
-        {this.answers}
+        {this.page}
       </div>
     </div>
   }

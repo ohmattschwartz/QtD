@@ -113,12 +113,17 @@ class App extends Component {
     return question
   }
 
+  followingsForUserId = (userId) => {
+    return this.state.followings.filter((following) => {
+      return (following.me === userId)
+    })
+
+  }
+
   myFollowings = () => {
     const my_own_id = this.getUserId()
 
-    return this.state.followings.filter((following) => {
-      return (following.me === my_own_id)
-    })
+    return followingsForUserId(my_own_id)
   }
 
   // Return if we are following this user
@@ -197,7 +202,8 @@ class App extends Component {
             isFollowing: this.isFollowing,
             myAnswers: this.myAnswers,
             questionForId: this.questionForId,
-            answerForTodaysQuestion: this.answerForTodaysQuestion
+            answerForTodaysQuestion: this.answerForTodaysQuestion,
+            followingsForUserId: this.followingsForUserId
           })}
       </main>
       <footer>
