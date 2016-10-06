@@ -30,10 +30,10 @@ class Home extends Component {
     event.preventDefault()
 
     if (this.answerForTodaysQuestion) {
-      this.props.reviseAnswer(this.refs.answer.value, this.answerForTodaysQuestion.id)
-
-      // Force a page update
-      document.location.reload()
+      this.props.reviseAnswer(this.refs.answer.value, this.answerForTodaysQuestion.id).then(() => {
+        // Force a page update
+        document.location.reload()
+      })
     } else {
       this.props.submitAnswer(this.refs.answer.value)
     }

@@ -152,7 +152,7 @@ class App extends Component {
   reviseAnswer = (text, answerId) => {
     const question = this.todaysQuestion
 
-    window.fetch(`${Api.url}/answers/${answerId}`, {
+    return window.fetch(`${Api.url}/answers/${answerId}`, {
       method: 'PATCH',
       headers: { 'Authorization': Api.bearer_token, 'Content-Type': 'application/json' },
       body: JSON.stringify({
