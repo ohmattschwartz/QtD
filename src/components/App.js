@@ -123,7 +123,7 @@ class App extends Component {
   myFollowings = () => {
     const my_own_id = this.getUserId()
 
-    return followingsForUserId(my_own_id)
+    return this.followingsForUserId(my_own_id)
   }
 
   // Return if we are following this user
