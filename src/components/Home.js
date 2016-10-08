@@ -122,7 +122,7 @@ class Home extends Component {
       </header>
       <div className='todaysQuestion'>
         <img src={require('../../images/todaysQuestion.png')} alt='todaysQuestion' />
-        <h1>{this.props.todaysQuestion.text}</h1>
+        <Link to='/login'><h1>{this.props.todaysQuestion.text}</h1></Link>
       </div>
 
       {this.myResponse}
