@@ -85,7 +85,7 @@ class MyProfile extends Component {
           <img src={require('../../images/myAnswers.png')} />
           <ul className='nav nav-tabs'>
             <li><Link to='/my-answers'>My Answers</Link></li>
-            <li><Link to='/my-followers' activeClassName='active'>My Followers</Link></li>
+            <li><Link to='/my-followers' activeClassName='active'>Following</Link></li>
           </ul>
         </div>
         {this.page}
