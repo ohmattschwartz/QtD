@@ -82,8 +82,6 @@ class Profile extends Component {
   }
 
   get page () {
-    console.log("PAGE!")
-    console.log(this.props.location.pathname)
     switch (this.props.location.pathname) {
       case `/profile/${this.userId}/their-answers`:
         return this.answers

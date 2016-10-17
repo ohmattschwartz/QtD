@@ -10,7 +10,7 @@ class App extends Component {
     route: React.PropTypes.object
   }
 
-  nilQuestion = { text: 'Oooops', day_posted: 'Never' }
+  nilQuestion = { text: 'Loading...', day_posted: 'Never' }
   nilUser = { picture_large: '', name: '' }
 
   constructor (props) {
